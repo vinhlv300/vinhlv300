@@ -1,73 +1,71 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
+#include <string.h>
 
-// Định nghĩa cấu trúc sinh viên
+#define MAX_STUDENTS 100
+
 struct Student {
-    string name;
+    char name[50];
     int age;
-    string address;
+    char address[100];
 };
 
-// Hàm nhập thông tin sinh viên
-void inputStudent(Student& student) {
-    cout << "Nhập tên sinh viên: ";
-    getline(cin >> ws, student.name); // Sử dụng getline để nhập chuỗi có khoảng trắng
-    cout << "Nhập tuổi sinh viên: ";
-    cin >> student.age;
-    cout << "Nhập địa chỉ sinh viên: ";
-    getline(cin >> ws, student.address);
+void inputStudent(struct Student *student) {
+    printf("Nhập tên sinh viên: ");
+    scanf("%s", student->name);
+    printf("Nhập tuổi sinh viên: ");
+    scanf("%d", &(student->age));
+    printf("Nhập địa chỉ sinh viên: ");
+    scanf("%s", student->address);
 }
 
-// Hàm hiển thị thông tin sinh viên
-void displayStudent(const Student& student) {
-    cout << "Tên sinh viên: " << student.name << endl;
-    cout << "Tuổi sinh viên: " << student.age << endl;
-    cout << "Địa chỉ sinh viên: " << student.address << endl;
+void displayStudent(const struct Student *student) {
+    printf("Tên sinh viên: %s\n", student->name);
+    printf("Tuổi sinh viên: %d\n", student->age);
+    printf("Địa chỉ sinh viên: %s\n", student->address);
 }
 
 int main() {
-    const int MAX_STUDENTS = 100;
-    Student students[MAX_STUDENTS];
+    struct Student students[MAX_STUDENTS];
     int numStudents = 0;
 
-    char choice;
+    int choice;
     do {
-        cout << "----- MENU -----" << endl;
-        cout << "1. Thêm sinh viên" << endl;
-        cout << "2. Hiển thị danh sách sinh viên" << endl;
-        cout << "3. Thoát" << endl;
-        cout << "Nhập lựa chọn của bạn: ";
-        cin >> choice;
+        printf("----- MENU -----\n");
+        printf("1. Thêm sinh viên\n");
+        printf("2. Hiển thị danh sách sinh viên\n");
+        printf("3. Thoát\n");
+        printf("Nhập lựa chọn của bạn: ");
+        scanf("%d", &choice);
 
         switch (choice) {
-            case '1':
+            case 1:
                 if (numStudents < MAX_STUDENTS) {
-                    cout << "Nhập thông tin sinh viên thứ " << numStudents + 1 << ":" << endl;
-                    inputStudent(students[numStudents]);
+                    printf("Nhập thông tin sinh viên thứ %d:\n", numStudents + 1);
+                    inputStudent(&students[numStudents]);
                     numStudents++;
                 } else {
-                    cout << "Danh sách sinh viên đã đầy." << endl;
+                    printf("Danh sách sinh viên đã đầy.\n");
                 }
                 break;
-            case '2':
+            case 2:
                 if (numStudents > 0) {
-                    cout << "Danh sách sinh viên:" << endl;
+                    printf("Danh sách sinh viên:\n");
                     for (int i = 0; i < numStudents; i++) {
-                        cout << "Sinh viên thứ " << i + 1 << ":" << endl;
-                        displayStudent(students[i]);
-                        cout << endl;
+                        printf("Sinh viên thứ %d:\n", i + 1);
+                        displayStudent(&students[i]);
+                        printf("\n");
                     }
                 } else {
-                    cout << "Danh sách sinh viên rỗng." << endl;
+                    printf("Danh sách sinh viên rỗng.\n");
                 }
                 break;
-            case '3':
-                cout << "Kết thúc chương trình." << endl;
+            case 3:
+                printf("Kết thúc chương trình.\n");
                 break;
             default:
-                cout << "Lựa chọn không hợp lệ." << endl;
+                printf("Lựa chọn không hợp lệ.\n");
         }
-    } while (choice != '3');
+    } while (choice != 3);
 
     return 0;
 }
